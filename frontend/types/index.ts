@@ -15,6 +15,7 @@ export interface CRMRecord {
   possession_time?: string;
   description?: string;
 }
+
 export interface ImportSummary {
   total: number;
   parsed: number;
@@ -22,6 +23,7 @@ export interface ImportSummary {
   processingTimeMs?: number;
   aiModelUsed?: string;
 }
+
 export interface ImportResponse {
   success: boolean;
   summary: ImportSummary;
