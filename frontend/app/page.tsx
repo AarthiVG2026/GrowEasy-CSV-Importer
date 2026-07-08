@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from 'react';
 import { FileUpload } from '@/components/importer/FileUpload';
 import { DataPreview } from '@/components/importer/DataPreview';
@@ -8,13 +7,12 @@ import { useImportCSV } from '@/hooks/useImportCSV';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Database } from 'lucide-react';
 import { Toaster } from '@/components/ui/sonner';
-
+import { toast } from 'sonner';
 export default function Home() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewData, setPreviewData] = useState<any[]>([]);
   
   const { uploadFile, isUploading, error, result, reset, retry } = useImportCSV();
-
   const handleFileSelect = (file: File, data: any[]) => {
     setSelectedFile(file);
     setPreviewData(data);
@@ -22,30 +20,25 @@ export default function Home() {
       description: `Ready to preview ${file.name}`
     });
   };
-
   const handleConfirm = () => {
     if (selectedFile) {
       uploadFile(selectedFile);
     }
   };
-
   const handleCancel = () => {
     setSelectedFile(null);
     setPreviewData([]);
   };
-
   const handleReset = () => {
     setSelectedFile(null);
     setPreviewData([]);
     reset();
   };
-
   return (
     <main className="min-h-screen bg-[#09090b] text-white flex flex-col relative overflow-hidden">
       {/* Background decorations */}
       <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-purple-600/20 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-blue-600/20 rounded-full blur-[120px] pointer-events-none" />
-
       <div className="flex-1 max-w-7xl mx-auto w-full p-6 relative z-10">
         <header className="py-12 flex flex-col items-center justify-center text-center">
           <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mb-6 shadow-xl border border-white/20 backdrop-blur-md">
@@ -59,7 +52,6 @@ export default function Home() {
             No more manual column mapping. Just drop your file and let AI do the rest.
           </p>
         </header>
-
         <div className="flex flex-col items-center justify-center w-full min-h-[400px]">
           <AnimatePresence mode="wait">
             {!selectedFile && !result && (
@@ -73,7 +65,6 @@ export default function Home() {
                 <FileUpload onFileSelect={handleFileSelect} />
               </motion.div>
             )}
-
             {selectedFile && !result && !error && (
               <motion.div
                 key="preview"
@@ -91,7 +82,6 @@ export default function Home() {
                 />
               </motion.div>
             )}
-
             {error && (
               <motion.div
                 key="error"
@@ -113,7 +103,6 @@ export default function Home() {
                 </div>
               </motion.div>
             )}
-
             {result && (
               <motion.div
                 key="results"
